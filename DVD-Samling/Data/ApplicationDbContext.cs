@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DVD_Samling.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +13,7 @@ namespace DVD_Samling.Data
             : base(options)
         {
         }
+
+        public DbSet<Genre> Genre { get; set; }
     }
 }
