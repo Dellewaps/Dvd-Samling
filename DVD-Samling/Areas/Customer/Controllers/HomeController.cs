@@ -6,22 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DVD_Samling.Models;
+using DVD_Samling.Models.ViewModels;
+using DVD_Samling.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace DVD_Samling.Controllers
 {
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
 
-        public IActionResult Index()
+        
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
+                MovieItem = await _db.movieItems.Include(M => M.Genre).ToListAsync(),
+                Genre = await _db.Genre.ToListAsync()
+            };
+            return View(IndexVM);
         }
 
         public IActionResult Privacy()

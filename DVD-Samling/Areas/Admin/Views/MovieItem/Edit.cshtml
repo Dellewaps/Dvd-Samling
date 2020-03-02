@@ -1,0 +1,82 @@
+﻿@model DVD_Samling.Models.ViewModels.MovieItemViewModel
+@using DVD_Samling.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Edit Film</h2>
+<br />
+
+<form method="post" enctype="multipart/form-data">
+    <div class="bordoer backgroundWhite row">
+        <input type="hidden" asp-for="MovieItem.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MovieItem.Name" class="form-control" />
+                </div>
+                <span asp-validation-for="MovieItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.Description" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    @Html.TextAreaFor(m => m.MovieItem.Description)
+                </div>
+                <span asp-validation-for="MovieItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.Subtitels" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MovieItem.Subtitels" class="form-control" />
+                </div>
+                <span asp-validation-for="MovieItem.Subtitels" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.Image" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" multiple class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.GenreId" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MovieItem.GenreId" id="GenreId" asp-items="Model.genre.ToSelectListItem(Model.MovieItem.GenreId)" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MovieItem.Agelimit" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MovieItem.Agelimit" id="Agelimit" name="Agelimit" asp-items="Html.GetEnumSelectList<MovieItem.EAge>()" class="form-control"></select>
+                </div>
+            </div> 
+        </div>
+        <div class="col-3 offset-1">
+            <img src="@Model.MovieItem.Image" width="100%" style="border-radius:5px; border: 1px solid #bbb9b9;" />
+        </div>
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_EditAndBackToListButton" model="Model.MovieItem.Id" />
+            </div>
+        </div>
+
+       
+    </div>
+</form>
+

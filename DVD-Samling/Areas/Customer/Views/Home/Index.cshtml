@@ -1,8 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model DVD_Samling.Models.ViewModels.IndexViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<br />
+
+<div class="backgroundWhite container">
+    @foreach(var genre in Model.Genre)
+    {
+        <div class="row" id="menu-wrapper">
+            <partial name="_thumbnailAreaPartial" model="@Model.MovieItem.Where(u => u.Genre.Name.Equals(genre.Name))" />
+        </div>
+    }
 </div>
