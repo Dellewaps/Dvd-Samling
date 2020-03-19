@@ -4,14 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DVD_Samling.Data;
+using DVD_Samling.Models;
 using DVD_Samling.Models.ViewModels;
 using DVD_Samling.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DVD_Samling.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class MovieItemController : Controller
     {
@@ -158,6 +161,66 @@ namespace DVD_Samling.Areas.Admin.Controllers
             MovieItemFromDb.GenreId = MovieItemVM.MovieItem.GenreId;
             MovieItemFromDb.Agelimit = MovieItemVM.MovieItem.Agelimit;
             await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Get all details on film
+        public async Task<IActionResult> Details(int? id)
+        {
+            if(id == null)
+            {
+                NotFound();
+            }
+
+            MovieItemVM.MovieItem = await _db.movieItems.Include(g => g.Genre).SingleOrDefaultAsync(m => m.Id == id);
+
+            if(MovieItemVM.MovieItem == null)
+            {
+                NotFound();
+            }
+
+            return View(MovieItemVM);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(id == null)
+            {
+                NotFound();
+            }
+
+            MovieItemVM.MovieItem = await _db.movieItems.Include(g => g.Genre).SingleOrDefaultAsync(m => m.Id == id);
+
+            if(MovieItemVM.MovieItem == null)
+            {
+                NotFound();
+            }
+
+            return View(MovieItemVM);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            string webRootPath = _webHostEnviroment.WebRootPath;
+
+            MovieItem movieItem = await _db.movieItems.FindAsync(id);
+
+            if( movieItem != null)
+            {
+                var imagePath = Path.Combine(webRootPath, movieItem.Image.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                _db.movieItems.Remove(movieItem);
+                await _db.SaveChangesAsync();
+
+            }
 
             return RedirectToAction(nameof(Index));
         }

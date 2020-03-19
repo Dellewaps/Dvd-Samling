@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DVD_Samling.Data;
 using DVD_Samling.Models;
+using DVD_Samling.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DVD_Samling.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class GenreController : Controller
     {
@@ -107,6 +110,20 @@ namespace DVD_Samling.Areas.Admin.Controllers
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var genre = await _db.Genre.FindAsync(id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            return View(genre);
         }
     }
 }

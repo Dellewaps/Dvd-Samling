@@ -17,5 +17,7 @@ namespace DVD_Samling.Data
         public DbSet<Genre> Genre { get; set; }
 
         public DbSet<MovieItem> movieItems { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<RentalCart> RentalCarts { get; set; }
     }
 }

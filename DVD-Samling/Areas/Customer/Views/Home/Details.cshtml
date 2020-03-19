@@ -1,0 +1,98 @@
+﻿@model DVD_Samling.Models.RentalCart
+@using DVD_Samling.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Film Detaljer</h2>
+<br />
+
+<form method="post" >
+    <div class="bordoer backgroundWhite row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12 pb-4 d-md-none">
+            <img src="@Model.MovieItem.Image" width="100%" style="border-radius:5px; border: 1px solid #bbb9b9;" />
+        </div>
+        <div class="col-md-8">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MovieItem.Name" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MovieItem.Name" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MovieItem.Description" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <div class="border p-2">
+                        @Html.Raw(Model.MovieItem.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MovieItem.Subtitels" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MovieItem.Subtitels" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MovieItem.GenreId" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MovieItem.Genre.Name" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MovieItem.Agelimit" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    @if (Model.MovieItem.Agelimit == "0")
+                    {
+                        <img srcset="/images/Tilladt_for_all.png" title="All" />
+                    }
+                    @if (Model.MovieItem.Agelimit == "1")
+                    {
+                        <img srcset="/images/Frarådes_for_børnunder_7.png" title="Age7" />
+                    }
+                    @if (Model.MovieItem.Agelimit == "2")
+                    {
+                        <img srcset="/images/Tilladt_fra_11_år.png" title="Age11" />
+                    }
+                    @if (Model.MovieItem.Agelimit == "3")
+                    {
+                        <img srcset="/images/Tilladt_fra_15_år.png" title="Age15" />
+                    }
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                    <a asp-action="Index" class="btn btn-secondary form-control">Tilbage til listen</a>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" value="Add to Cart" class="btn btn-primary form-control">Put i Kurv</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 offset-1 d-none d-md-block">
+            <img src="@Model.MovieItem.Image" width="100%" style="border-radius:5px; border: 1px solid #bbb9b9;" />
+        </div>
+
+
+
+    </div>
+    <input asp-for="MovieItemId" hidden />
+</form>
+

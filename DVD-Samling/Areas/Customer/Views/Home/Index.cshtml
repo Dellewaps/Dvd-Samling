@@ -5,10 +5,49 @@
 <br />
 
 <div class="backgroundWhite container">
-    @foreach(var genre in Model.Genre)
+
+    <ul id="menu-filters" class="menu-filter-list list-inline text-center">
+        <li class="filter active btn btn-secondary ml-1 mr-1" data-filter=".movie-shop">Vis alle</li>
+
+        @foreach (var item in Model.Genre)
+        {
+            <li class="filter ml-1 mr-1" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
+        }
+    </ul>
+
+    @foreach (var genre in Model.Genre)
     {
         <div class="row" id="menu-wrapper">
-            <partial name="_thumbnailAreaPartial" model="@Model.MovieItem.Where(u => u.Genre.Name.Equals(genre.Name))" />
+            <partial name="_ThumbnailAreaPartial" model="@Model.MovieItem.Where(u => u.Genre.Name.Equals(genre.Name))" />
         </div>
     }
 </div>
+
+
+@section Scripts{
+    <script src="http://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+
+
+<script>
+    var posts = $('.post');
+
+    (function ($) {
+        $("#menu-filters li").click(function () {
+            $("#menu-filters li").removeClass('active btn btn-secondary');
+            $(this).addClass('active btn btn-secondary');
+
+            var selectedFilter = $(this).data("filter");
+
+            $(".movie-shop").fadeOut();
+
+            setTimeout(function () {
+                $(selectedFilter).slideDown();
+            }, 300);
+        });
+    })(jQuery);
+
+</script>
+
+}

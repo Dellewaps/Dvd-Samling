@@ -44,19 +44,19 @@
                     @Html.DisplayFor(m => item.Name)
                 </td>
                 <td>
-                    @if (item.Agelimit == "1")
+                    @if (item.Agelimit == "0")
                     {
-                        <img srcset="/images/Tilladt_for_all.gif" title="All" />
+                        <img srcset="/images/Tilladt_for_all.png" title="All" />
                     }
-                    @if (item.Agelimit == "2")
+                    @if (item.Agelimit == "1")
                     {
                         <img srcset="/images/Frarådes_for_børnunder_7.jpg" title="Age7" />
                     }
-                    @if (item.Agelimit == "3")
+                    @if (item.Agelimit == "2")
                     {
                         <img srcset="/images/Tilladt_fra_11_år.png" title="All" />
                     }
-                    @if (item.Agelimit == "4")
+                    @if (item.Agelimit == "3")
                     {
                         <img srcset="/images/Tilladt_fra_15_år.png" title="All" />
                     }
@@ -68,7 +68,7 @@
                     @Html.DisplayFor(m => item.Subtitels)
                 </td>
                 <td>
-                    <partial name="_GenreTableButton" model="item.Id" />
+                    <partial name="_TableButtonPartial" model="item.Id" />
                 </td>
             </tr>
                 }

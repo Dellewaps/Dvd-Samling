@@ -60,7 +60,7 @@
                 <label asp-for="MovieItem.Agelimit" class="col-form-label"></label>
             </div>
             <div class="col-5">
-                <select asp-for="@Model.MovieItem.Agelimit" id="Agelimit" name="Agelimit" asp-items="Html.GetEnumSelectList<MovieItem.EAge>()" class="form-control"></select>
+                <select asp-for="@Model.MovieItem.Agelimit" asp-items="Html.GetEnumSelectList<MovieItem.EAge>()" class="form-control"></select>
             </div>
         </div>
 
